@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartMaanage - Your Desktop Productivity App</title>
+    
+    <style>
+        /* ========== START: LANDING PAGE CSS ========== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        :root {
+            --color-bg-dark: #12121c;
+            --color-primary: #8e44ad;
+            --color-secondary: #00c6ff;
+            --color-white: #f0f0f5;
+            --color-gray: #a0a0b0;
+            --gradient-primary: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --shadow-soft: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--color-bg-dark); color: var(--color-white); font-family: 'Poppins', sans-serif; line-height: 1.7; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .main-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 1.5rem 0; transition: background-color 0.3s ease, padding 0.3s ease; }
+        .main-header.scrolled { background-color: rgba(18, 18, 28, 0.8); backdrop-filter: blur(10px); padding: 1rem 0; border-bottom: 1px solid var(--glass-bg); }
+        .header-container { display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+        .logo-link h2 { font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        a { text-decoration: none; }
+        .main-nav a { color: var(--color-gray); font-weight: 500; margin: 0 1rem; transition: color 0.3s ease; }
+        .main-nav a:hover { color: var(--color-white); }
+        .btn { padding: 0.75rem 1.75rem; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; transition: all 0.3s ease; display: inline-block; text-align: center; font-size: 1rem; }
+        .btn-primary { background: var(--gradient-primary); color: white; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(142, 68, 173, 0.4); }
+        .btn-secondary { background: var(--glass-bg); color: var(--color-white); border: 1px solid var(--color-secondary); }
+        .btn-secondary:hover { background-color: var(--color-secondary); color: var(--color-bg-dark); }
+        #hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 8rem 2rem 4rem; background: radial-gradient(ellipse at top, rgba(142, 68, 173, 0.15), transparent 70%), radial-gradient(ellipse at bottom, rgba(0, 198, 255, 0.1), transparent 70%), var(--color-bg-dark); }
+        .hero-content { max-width: 800px; }
+        .hero-content h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.2; margin-bottom: 1.5rem; }
+        .hero-content p { font-size: 1.1rem; color: var(--color-gray); max-width: 600px; margin: 0 auto 2.5rem; }
+        .hero-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .hero-visual { margin-top: 4rem; perspective: 1500px; }
+        .app-preview { background: linear-gradient(145deg, #1f1f32, #161621); border-radius: 20px; padding: 1rem; box-shadow: 0 40px 80px rgba(0,0,0,0.4); transform: rotateX(20deg) rotateY(-10deg) scale(0.9); transition: transform 0.5s ease; }
+        .app-preview:hover { transform: rotateX(0) rotateY(0) scale(1); }
+        .app-preview img { width: 100%; max-width: 800px; border-radius: 12px; display: block; }
+        section { padding: 6rem 0; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 1rem; }
+        .section-subtitle { text-align: center; color: var(--color-gray); max-width: 600px; margin: 0 auto 4rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .feature-card { background: var(--glass-bg); padding: 2.5rem; border-radius: 16px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-soft); }
+        .feature-icon { font-size: 3rem; line-height: 1; margin-bottom: 1.5rem; }
+        #showcase { background-color: #161621; }
+        .showcase-image-wrapper { background: var(--glass-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow-soft); }
+        .showcase-image-wrapper img { width: 100%; display: block; border-radius: 8px; }
+        #final-cta { text-align: center; }
+        #final-cta h2 { font-size: 2.2rem; }
+        #final-cta p { color: var(--color-gray); margin-bottom: 2rem; }
+        .main-footer { text-align: center; padding: 2rem; margin-top: 4rem; border-top: 1px solid var(--glass-bg); color: var(--color-gray); }
+        .hidden { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .hidden.show { opacity: 1; transform: translateY(0); }
+        @media (max-width: 768px) { .main-nav { display: none; } .hero-content h1 { font-size: 2.5rem; } .section-title { font-size: 2rem; } }
+        /* ========== END: LANDING PAGE CSS ========== */
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <a href="#" class="logo-link"><h2>SmartMaanage</h2></a>
+            <nav class="main-nav">
+                <a href="#features">Features</a>
+                <a href="#showcase">Showcase</a>
+            </nav>
+            <a href="thankyou.html" class="btn btn-primary launch-btn">Download for Desktop</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="hero-content">
+                <h1 class="hidden">The Power of Your Ideas, Now on Your Desktop.</h1>
+                <p class="hidden">A sleek, intuitive platform to manage projects, customize notes, and bring your vision to life. The future of your productivity is here.</p>
+                <div class="hero-buttons hidden">
+                    <a href="thankyou.html" class="btn btn-primary">Download SmartMaanage</a>
+                    <a href="#showcase" class="btn btn-secondary">See It In Action</a>
+                </div>
+            </div>
+            <div class="hero-visual hidden">
+                <div class="app-preview"><img src="img.png" alt="SmartMaanage App Preview"></div>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="container">
+                <h2 class="section-title hidden">Everything You Need, All In One Place.</h2>
+                <div class="features-grid">
+                    <div class="feature-card hidden"><div class="feature-icon">📝</div><h3>Intuitive Workspace</h3><p>A clean, distraction-free environment to create, organize, and manage your projects with tags and categories.</p></div>
+                    <div class="feature-card hidden"><div class="feature-icon">🎨</div><h3>Deep Customization</h3><p>Make every note your own with a powerful properties panel. Change colors, fonts, and backgrounds with live previews.</p></div>
+                    <div class="feature-card hidden"><div class="feature-icon">💾</div><h3>Export & Share</h3><p>Download your beautifully styled notes as standalone HTML files to share, archive, or host anywhere you like.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="showcase">
+            <div class="container">
+                <h2 class="section-title hidden">Designed for Clarity and Focus</h2>
+                <p class="section-subtitle hidden">Our signature glassmorphic design isn't just for show—it creates a sense of depth and hierarchy that lets your content take center stage. We believe a beautiful interface should also be a productive one.</p>
+                <div class="showcase-image-wrapper hidden"><img src="img2.png" alt="A detailed view of the SmartMaanage editor and project cards."></div>
+            </div>
+        </section>
+
+        <section id="final-cta">
+            <div class="container hidden">
+                <h2>Ready to Elevate Your Workflow?</h2>
+                <p>Download the desktop app now and experience the difference.</p>
+                <a href="thankyou.html" class="btn btn-primary">Download SmartMaanage</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer"><p>© 2024 SmartMaanage. All Rights Reserved.</p></footer>
+
+    <script>
+        /* ========== START: LANDING PAGE JAVASCRIPT ========== */
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('.main-header');
+            window.addEventListener('scroll', () => { window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled'); });
+            const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('show'); } }); }, { threshold: 0.1 });
+            document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+        });
+        /* ========== END: LANDING PAGE JAVASCRIPT ========== */
+    </script>
+</body>
+</html>

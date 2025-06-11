@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Complete! - SmartMaanage</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        /* --- CSS Variables --- */
+        :root {
+            --color-bg-dark: #12121c;
+            --color-primary: #8e44ad;
+            --color-secondary: #00c6ff;
+            --color-white: #f0f0f5;
+            --color-gray: #a0a0b0;
+            --color-success: #2ecc71;
+            --gradient-primary: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
+            --glass-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- Base & Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* --- Keyframe Animations --- */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes draw-check {
+            0% { stroke-dashoffset: 200; }
+            100% { stroke-dashoffset: 0; }
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.5; }
+        }
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Custom Gradient Scrollbar --- */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-primary) var(--color-bg-dark); /* For Firefox */
+        }
+        body::-webkit-scrollbar {
+            width: 12px;
+        }
+        body::-webkit-scrollbar-track {
+            background: var(--color-bg-dark);
+        }
+        body::-webkit-scrollbar-thumb {
+            background-image: var(--gradient-primary);
+            border-radius: 20px;
+            border: 2px solid var(--color-bg-dark);
+        }
+        
+        /* --- Body and Background --- */
+        body {
+            background-color: var(--color-bg-dark);
+            color: var(--color-white);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            overflow-y: auto; /* Enable scrolling on the body */
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, var(--color-bg-dark), #2c1a3e, var(--color-bg-dark), #1a3e4f);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+            z-index: -1;
+        }
+
+        /* --- Main Content Container --- */
+        .container {
+            text-align: center;
+            max-width: 700px;
+            animation: fade-in-up 0.8s ease-out;
+            width: 100%;
+        }
+        
+        /* --- Success Icon --- */
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+        }
+        .success-icon .circle {
+            stroke-width: 4;
+            stroke: rgba(46, 204, 113, 0.3);
+            fill: none;
+            animation: pulse 2.5s ease-in-out infinite;
+        }
+        .success-icon .checkmark {
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke: var(--color-success);
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: draw-check 0.9s 0.2s ease-out forwards;
+            fill: none;
+        }
+
+        /* --- Text and Links --- */
+        h1 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 700;
+            color: var(--color-white);
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--color-gray);
+            margin-bottom: 2rem;
+        }
+        .fallback-link {
+            margin-bottom: 3rem;
+        }
+        .fallback-link a {
+            color: var(--color-secondary);
+            font-weight: 500;
+            text-decoration: underline;
+            transition: color 0.3s;
+        }
+        .fallback-link a:hover {
+            color: var(--color-white);
+        }
+
+        /* --- Instructions Card --- */
+        .instructions-card {
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: left;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        .instructions-card h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-bg);
+            padding-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .instructions-card ol {
+            list-style: none;
+            counter-reset: steps-counter;
+        }
+        .instructions-card li {
+            counter-increment: steps-counter;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: var(--color-gray);
+            position: relative;
+            padding-left: 50px;
+            opacity: 0;
+            animation: fade-in-up 0.6s ease-out forwards;
+        }
+        .instructions-card li:last-child {
+            margin-bottom: 0;
+        }
+        .instructions-card li::before {
+            content: counter(steps-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: white;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Staggered animation delays */
+        .instructions-card li:nth-child(1) { animation-delay: 0.5s; }
+        .instructions-card li:nth-child(2) { animation-delay: 0.7s; }
+        .instructions-card li:nth-child(3) { animation-delay: 0.9s; }
+
+        .instructions-card li strong {
+            color: var(--color-white);
+            font-weight: 600;
+        }
+
+        /* --- Back Link --- */
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--color-white);
+            background-color: var(--glass-bg);
+            padding: 0.7rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <svg class="success-icon" viewBox="0 0 100 100">
+            <circle class="circle" cx="50" cy="50" r="46"/>
+            <polyline class="checkmark" points="28,52 45,69 72,37" />
+        </svg>
+
+        <h1>Download Started!</h1>
+        <p class="subtitle">Your file is on its way. Please check your downloads folder.</p>
+        
+        <p class="fallback-link">
+            If it didn't start, <a id="manual-download-link" href="Smart manage.rar" download>click here to try again</a>.
+        </p>
+
+        <div class="instructions-card">
+            <h2>Next Steps</h2>
+            <ol>
+                <li>
+                    <strong>Find the File:</strong> Open your computer's file manager and navigate to your <strong>Downloads</strong> folder to find <code>Smart manage.rar</code>.
+                </li>
+                <li>
+                    <strong>Extract the Archive:</strong> You need an app like WinRAR or 7-Zip. Right-click the <code>.rar</code> file and choose "Extract Here".
+                </li>
+                <li>
+                    <strong>Run the App:</strong> Open the new folder that was created and double-click the <strong>SmartMaanage application file</strong> to launch your new app!
+                </li>
+            </ol>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to Homepage</a>
+    </div>
+
+    <script>
+        // This script will run as soon as the page loads, triggering the download.
+        window.onload = function() {
+            // Create a temporary, invisible link element
+            const link = document.createElement('a');
+            link.href = 'https://download946.mediafire.com/btzd4rs0nzkgdfY2RgTG5apsvYKnkRYltgXYM_TbYpZtYyPBU2OCe2SLCLzFZyRKp6ZLaECuAG9-4uGzwr6M9VbKG56OcoVpXEVvbiepyfL2s2l_URwdOJVBIyOEs4mTUW-RocozxzWiSa7VdnKeKjIPkh723RRRfgPzPVv2AdyD2U_vPQ/a19j4ka7mv07m8w/Smart+manage.rar'; // The name of your file
+            
+            // The 'download' attribute prompts the browser to download the file
+            link.setAttribute('download', 'Smart manage.rar'); 
+            
+            // Append to the document, click it, and then remove it
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+    </script>
+</body>
+</html>
